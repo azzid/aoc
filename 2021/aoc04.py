@@ -15,10 +15,16 @@ def readfile():
 
 def iswinner(announced, board):
   announcedset = set(announced)
+  colboard = list(zip(*board[::-1]))
   for row in board:
     rowset = set(row)
     #print(f"announced: {announcedset}, row: {rowset}, intersect: {announcedset.intersection(rowset)}")
     if len(announcedset.intersection(rowset)) >= 5:
+      return True
+  for column in colboard:
+    colset = set(column)
+    #print(f"announced: {announcedset}, row: {rowset}, intersect: {announcedset.intersection(rowset)}")
+    if len(announcedset.intersection(colset)) >= 5:
       return True
   return False
 
@@ -73,8 +79,8 @@ def second():
   i = winnerannounceds.index(max(winnerannounceds, key = len))
   #print(f"{winnerboards[i]}")
   #print(f"{winnerannounceds[i]}")
-  for i in range(len(winnerannounceds)):
-    score = boardscore(winnerannounceds[i], winnerboards[i])
-    print(f"{len(winnerannounceds[i])}: {score}")
+  #for i in range(len(winnerannounceds)):
+  score = boardscore(winnerannounceds[i], winnerboards[i])
+  print(f"{len(winnerannounceds[i])}: {score}")
 
 second()
