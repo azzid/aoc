@@ -12,6 +12,7 @@ def readfile():
 
 def first():
   coordinates = readfile()
-  print(f"{coordinates[0:2]}")
+  # remove diagonal lines
+  coordinates = filter(lambda line: line[0][0] == line[1][0] or line[0][1] == line[1][1], coordinates)
 
 first()
