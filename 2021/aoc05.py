@@ -44,8 +44,6 @@ def first():
 
 def second():
   coordinates = readfile()
-  # remove diagonal lines
-  coordinates = list(filter(lambda line: line[0][0] == line[1][0] or line[0][1] == line[1][1], coordinates))
   maxcoordinate = max(reduce(lambda a, b: a+b, reduce(lambda a, b: a+b, coordinates)))+2
   diagram = []
   for i in range(maxcoordinate):
@@ -62,6 +60,18 @@ def second():
       y = y1
       for x in range(min(x1,x2), max(x1,x2)+1):
         diagram[y][x] += 1
+    else:
+      if x1 < x2:
+        xs = list(range(x1, x2+1))
+      else:
+        xs = list(range(x1, x2-1, -1))
+      if y1 < y2:
+        ys = list(range(y1, y2+1))
+      else:
+        ys = list(range(y1, y2-1, -1))
+      for i in list(range(len(xs))):
+        diagram[ys[i]][xs[i]] += 1
+
   print(f"{len(list(filter(lambda z: z > 1, reduce(lambda a, b: a+b, diagram))))}")
 
 second()
