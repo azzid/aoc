@@ -26,12 +26,20 @@ def first():
     x2, y2 = stop
     if x1 == x2:
       x = x1
-      for y in range(y1, y2+1):
-        diagram[y][x] += 1
+      if y1 < y2:
+        for y in range(y1, y2+1):
+          diagram[y][x] += 1
+      else:
+        for y in range(y2, y1+1):
+          diagram[y][x] += 1
     elif y1 == y2:
       y = y1
-      for x in range(x1, x2+1):
-        diagram[y][x] += 1
+      if x1 < x2:
+        for x in range(x1, x2+1):
+          diagram[y][x] += 1
+      else:
+        for x in range(x2, x1+1):
+          diagram[y][x] += 1
   print(f"{len(list(filter(lambda z: z > 1, reduce(lambda a, b: a+b, diagram))))}")
 
 first()
