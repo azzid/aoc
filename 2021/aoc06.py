@@ -15,4 +15,14 @@ def first():
         fishies[i] = 7
       fishies[i] -= 1
 
-first()
+def second():
+  fishies = readfile()
+  fishiecounts = [0,0,0,0,0,0,0,0,0]
+  for i in range(9):
+    fishiecounts[i] = fishies.count(i)
+  for day in list(range(257)):
+    print(f"Day {day} there are: {sum(fishiecounts)} fishies")
+    fishiecounts = fishiecounts[1:] + fishiecounts[:1]
+    fishiecounts[6] += fishiecounts[-1]
+
+second()
