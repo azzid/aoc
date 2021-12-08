@@ -17,9 +17,9 @@ def first():
 
 def second():
   data = readfile()
-  one, two, three, four, five, six, seven, eight, nine = 0,0,0,0,0,0,0,0,0
   stringsum = 0
   for i in range(len(data)):
+    zero, one, two, three, four, five, six, seven, eight, nine = 0,0,0,0,0,0,0,0,0,0
     string = ''
     dovs = data[i][1]
     usps = data[i][0]
@@ -72,8 +72,13 @@ def second():
         string += '8'
       elif dov == nine:
         string += '9'
+      else:
+        print(f"Number {dov} not recognized. :-(")
+        print(f"{usps} | {dovs}")
+        print(f"{dovs}: {string}")
+        quit()
     stringsum += int(string)
-    print(f"{dovs}: {string}")
+    #print(f"{dovs}: {string}")
   print(f"SUM: {stringsum}")
 
 second()
