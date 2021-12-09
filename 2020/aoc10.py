@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3
+from functools import reduce
 def readfile():
   with open('aoc10.txt', 'r') as file:
     return(list(map(lambda x:int(x.strip()), file)))
@@ -40,9 +41,6 @@ def listisvalid(adapters):
     bool = bool and adapters[i+1] - adapters[i] <= 3
   return bool
 
-#def indexoffork(adapters):
-#  for i in range(len(adapters)):
-    
 def trimmedlists(adapters):
   sublists = []
   for i in range(len(adapters)):
@@ -59,18 +57,15 @@ def second():
   adapters.sort()
   adapters.append(adapters[-1]+3)
   adapters = [0] + adapters
-  valids = []
-  if listisvalid(adapters):
-    valids.append(adapters)
-  shorterlist = trimmedlists(adapters)
-  i = 0
-  while shorterlist:
-    valids = valids + shorterlist
-    templist = []
-    for lista in shorterlist:
-      templist += trimmedlists(lista)
-    shorterlist = templist
-    i += 1
-    print(f"{i}: {len(valids)}")
+  adapteroptions = []
+
+  for adapter in adapters:
+    #print(f"{adapter} has {len([x for x in adapters if adapter < x <= adapter+3])} possible adapters to connect to.")
+    adapteroptions.append(len([x for x in adapters if adapter < x <= adapter+3]))
+  adapteroptions = [a for a in adapteroptions if a > 0]
+  #print(f"{adapteroptions}")
+  adaptercombos = reduce(lambda a, b: a*b, adapteroptions)
+
+  print(f"{adaptercombos}")
 
 second()
