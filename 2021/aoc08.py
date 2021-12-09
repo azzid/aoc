@@ -23,9 +23,12 @@ def second():
     string = ''
     dovs = data[i][1]
     usps = data[i][0]
-    patterns = usps + dovs
+    patterns = usps 
     pattsets = list(map(set, patterns))
-    for ps in [dov for dov in pattsets if len(dov) == 2 or len(dov) == 3 or len(dov) == 4 or len(dov) == 7]:
+    if not len(pattsets) == 10:
+      print(f"pattset not 10 long: {pattset}")
+      quit()
+    for ps in [usp for usp in pattsets if len(usp) == 2 or len(usp) == 3 or len(usp) == 4 or len(usp) == 7]:
       if len(ps) == 2:
         one = ps
       if len(ps) == 3:
@@ -34,15 +37,18 @@ def second():
         four = ps
       if len(ps) == 7:
         eight = ps
-    for ps in [dov for dov in pattsets if len(dov) == 5]:
+    for ps in [usp for usp in pattsets if len(usp) == 5]:
     # patterns 5 long are numbers 2, 3, 5
       if one.issubset(ps):
         three = ps
-      if len(ps.difference(four)) == 3:
+      elif len(ps.difference(four)) == 3:
         two = ps
-      if len(ps.difference(four)) == 2:
+      elif len(ps.difference(four)) == 2:
         five = ps
-    for ps in [dov for dov in pattsets if len(dov) == 6]:
+      else:
+        print(f"ps {ps} not recognized")
+        quit()
+    for ps in [usp for usp in pattsets if len(usp) == 6]:
     # patterns 6 long are numbers 0, 6, 9
       if not five.issubset(ps):
         zero = ps
@@ -50,6 +56,20 @@ def second():
         nine = ps
       else:
         six = ps
+    while 0 in [zero, one, two, three, four, five, six, seven, eight, nine]:
+      for i, s in enumerate([zero, one, two, three, four, five, six, seven, eight, nine]):
+        if not type(s) is set:
+          print(f"Still no set defined to describe {i} ", end='')
+          if i == 6 and type(two) is set and type(three) is set and type(five) is set:
+            # We can construct our own 6.
+            six = five.union(two.difference(three))
+            print(f"constructing my own: {six}")
+          else:
+            print(f"")
+            quit()
+    if 0 in [zero, one, two, three, four, five, six, seven, eight, nine]:
+      print(f"Error: some pattern not recognized: {[zero, one, two, three, four, five, six, seven, eight, nine]}")
+      quit()
     for dov in dovs:
       dov = set(dov)
       if dov == zero:
