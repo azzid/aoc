@@ -44,7 +44,8 @@ def flash(octo, indata):
     for sx in range(lsx, hsx+1):
       if (sx, sy) == octo:
         #print(f"({(sx,sy)})", end='')
-        indata[sy][sx] = 0
+        pass
+        #indata[sy][sx] = 0
       else:
         #print(f"{(sx,sy)}", end='')
         indata[sy][sx] += 1
