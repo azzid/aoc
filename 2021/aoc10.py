@@ -1,7 +1,14 @@
 #!/usr/local/bin/python3
+from pathlib import Path
+def datafilename():
+  mypath = Path(__file__)
+  txtpath = mypath.with_suffix('.txt')
+  return txtpath
+
 def readfile():
   data = []
-  with open('aoc10.txt', 'r') as file:
+  datafile = datafilename()
+  with open(datafile, 'r') as file:
     for line in file:
       data.append(list(map(str, list(line.strip()))))
   return data
