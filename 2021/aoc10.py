@@ -57,7 +57,7 @@ def second():
     '>': 4,
   }
   seen = []
-  totalscore = 0
+  totalscores = []
   for line in data:
     for char in line:
       if char in openings:
@@ -79,6 +79,7 @@ def second():
           #print(f"Line: {''.join(line)} is bust.")
           #quit()
     missingclosings = []
+    missingopenings = seen[:]
     while seen:
     # Still got unclosed openings, line need to be completed
       opening = seen.pop()
@@ -91,12 +92,14 @@ def second():
       elif opening == '<':
         missingclosings.append('>')
     if missingclosings:
-      #print(f"{''.join(missingclosings)}")
+      #print(f"{''.join(missingopenings)}  {''.join(missingclosings)}")
+      #quit()
       score = 0
       for c in missingclosings:
         score *= 5
         score += points[c]
-      totalscore += score
-  print(f"Score: {totalscore}")
+      totalscores.append(score)
+  totalscores.sort()
+  print(f"Score: {totalscores[int((len(totalscores) - 1)/2)]}")
 
 second()
