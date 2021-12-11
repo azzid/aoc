@@ -87,7 +87,8 @@ def first():
     #print("After:")
     #for line in data:
     #  print(f"{''.join(map(str, line))}")
-    print(f"Flashes after step {i}: {flashes}")
+    if i == 100:
+      print(f"Flashes after step {i}: {flashes}")
 
 def second():
   data = readfile()
