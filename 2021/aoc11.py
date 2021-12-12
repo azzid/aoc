@@ -85,6 +85,24 @@ def first():
       print(f"Flashes after step {i}: {flashes}")
 
 def second():
+  flashes = 0
   data = readfile()
 
-first()
+  for i in range(1,10100):
+    data = plusone(data)
+    flashyoctopi = getninepluses(data)
+    alreadyflashed = set()
+    while flashyoctopi:
+      for octo in flashyoctopi:
+        flashes += 1
+        data = flash(octo, data)
+        alreadyflashed.add(octo)
+      flashyoctopi = getninepluses(data)
+      flashyoctopi = list(set(flashyoctopi).difference(alreadyflashed))
+    # Finally, any octopus that flashed during this step has its energy level set to 0, as it used all of its energy to flash.
+    data = nullify(alreadyflashed, data)
+    if len(alreadyflashed) == 100:
+      print(f"Everybody flashed at once! This happened in step {i}.")
+      quit()
+
+second()
