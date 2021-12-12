@@ -69,24 +69,29 @@ def first():
     # Then, any octopus with an energy level greater than 9 flashes.
     flashyoctopi = getninepluses(data)
     alreadyflashed = set()
-    #print("Before:")
-    #for line in data:
-    #  print(f"{''.join(map(str, line))}")
+    print("Before:")
+    for line in data:
+      print(f"{''.join(map(str, line))}")
     # This increases the energy level of all adjacent octopuses by 1, including octopuses that are diagonally adjacent.
     # If this causes an octopus to have an energy level greater than 9, it also flashes.
     while flashyoctopi:
+      print(f"flashy: {flashyoctopi}")
+      print(f"pömsig: {alreadyflashed}")
       for octo in flashyoctopi:
+        print(f"octo in {octo} flashing")
         flashes += 1
         data = flash(octo, data)
         # An octopus can only flash at most once per step.
         alreadyflashed.add(octo)
       flashyoctopi = getninepluses(data)
       flashyoctopi = list(set(flashyoctopi).difference(alreadyflashed))
+      print(f"count: {flashes}")
     # Finally, any octopus that flashed during this step has its energy level set to 0, as it used all of its energy to flash.
     data = nullify(alreadyflashed, data)
-    #print("After:")
-    #for line in data:
-    #  print(f"{''.join(map(str, line))}")
+    print("After:")
+    for line in data:
+      print(f"{''.join(map(str, line))}")
+    quit()
     if i == 100:
       print(f"Flashes after step {i}: {flashes}")
 
