@@ -23,7 +23,7 @@ def getninepluses(indata):
   readytoflash = []
   for y in list(range(len(indata))):
     for x in list(range(len(indata[y]))):
-      if indata[y][x] >= 9:
+      if indata[y][x] > 9:
         readytoflash.append((x,y))
   return readytoflash
 
