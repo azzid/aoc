@@ -20,8 +20,8 @@ def possiblenext(path, data):
     # Path not started, first edge[0] is 'start' mandatory
     starts = [edge for edge in data if edge[0] == 'start']
     return starts
-  if path[-1][1] == 'stop':
-    # Path has reached stop. No possible next step.
+  if path[-1][1] == 'end':
+    # Path has reached end. No next step.
     return []
   else:
     nexts = [edge for edge in data if path[-1][1] == edge[0] and not edge[1] in visitedsmallcaves]
