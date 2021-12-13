@@ -16,22 +16,36 @@ def readfile():
 def possiblenext(path, data):
   # Impossibly clever way to keep track of visited small caves
   visitedsmallcaves = list(set([point for edge in path for point in edge if point.islower()]))
+  print(f"path: {path}")
   if not path:
     # Path not started, first edge[0] is 'start' mandatory
     starts = [edge for edge in data if edge[0] == 'start']
     return starts
-  if path[-1][1] == 'end':
+  elif path[-1][1] == 'end' or 'DEAD END' in path:
     # Path has reached end. No next step.
     return []
   else:
     nexts = [edge for edge in data if path[-1][1] == edge[0] and not edge[1] in visitedsmallcaves]
-    return nexts
+    if nexts:
+      return nexts
+    else:
+      return ["DEAD END"]
 
 def first():
   data = readfile()
   path = []
-  path.append(possiblenext(path, data)[0])
-  print(f"{possiblenext(path, data)}")
+  paths = []
+  # Seed paths with start edges
+  for nextstep in possiblenext(path, data):
+    path.append(nextstep)
+    paths.append(path[:])
+    path.remove(nextstep)
+  for path in paths:
+    paths.remove(path)
+    for nextstep in possiblenext(path, data):
+      path.append(nextstep)
+      paths.append(path)
+  print(f"{paths}")
   
 
 def second():
