@@ -41,24 +41,17 @@ def first():
   i = 0
   for nextstep in possiblenext(path):
     i += 1
-    #print(f"{i}:{path} of ({paths})")
     path.append(nextstep)
-    #print(f"{i}:{path} of ({paths})")
     paths.append(deepcopy(path))
-    #print(f"{i}:{path} of ({paths})")
     path.remove(nextstep)
-    #print(f"{i}:{path} of ({paths})")
-  print(f"paths: {paths}")
   while [path for path in paths if not path[-1][-1] == 'end']:
     path = [path for path in paths if not path[-1][-1] == 'end'][0]
     paths.remove(path)
-    print(f"paths: {paths}, path: {path}")
     for nextstep in possiblenext(path):
-      print(f"next: {nextstep} for: {path}")
       path.append(nextstep)
       paths.append(deepcopy(path))
       path.remove(nextstep)
-  print(f"{paths}")
+  print(f"{len(paths)}")
   
 
 def second():
