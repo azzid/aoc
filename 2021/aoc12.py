@@ -22,15 +22,19 @@ def possiblenext(path):
   if not path:
     # Path not started, first edge[0] is 'start' mandatory
     starts = [edge for edge in data if edge[0] == 'start']
+    print(f"path {path} has not started, return starts ({starts})")
     return starts
   elif path[-1][1] == 'end' or 'DEAD END' in path:
     # Path has reached end. No next step.
+    print(f"Path has reached end. No next step in {path}")
     return []
   else:
     nexts = [edge for edge in data if path[-1][1] == edge[0] and not edge[1] in visitedsmallcaves]
     if nexts:
+      print(f"path {path} can continue via {nexts}")
       return nexts
     else:
+      print(f"path {path} seem to be a dead end")
       return ["DEAD END"]
 
 def first():
@@ -38,19 +42,18 @@ def first():
   path = []
   paths = []
   # Seed paths with start edges
-  i = 0
   for nextstep in possiblenext(path):
-    i += 1
     path.append(nextstep)
     paths.append(deepcopy(path))
     path.remove(nextstep)
   while [path for path in paths if not path[-1][-1] == 'end']:
-    path = [path for path in paths if not path[-1][-1] == 'end'][0]
-    paths.remove(path)
-    for nextstep in possiblenext(path):
-      path.append(nextstep)
-      paths.append(deepcopy(path))
-      path.remove(nextstep)
+    for path in [path for path in paths if not path[-1][-1] == 'end']:
+      print(f"current unfinished path: {path}")
+      paths.remove(path)
+      for nextstep in possiblenext(path):
+        path.append(nextstep)
+        paths.append(deepcopy(path))
+        path.remove(nextstep)
   print(f"{len(paths)}")
   
 
