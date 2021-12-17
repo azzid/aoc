@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3
+from copy import deepcopy
 from pathlib import Path
 def datafilename():
   mypath = Path(__file__)
@@ -38,13 +39,13 @@ def first():
   # Seed paths with start edges
   for nextstep in possiblenext(path, data):
     path.append(nextstep)
-    paths.append(path[:])
+    paths.append(deepcopy(path))
     path.remove(nextstep)
   for path in paths:
     paths.remove(path)
     for nextstep in possiblenext(path, data):
       path.append(nextstep)
-      paths.append(path)
+      paths.append(deepcopy(path))
   print(f"{paths}")
   
 
