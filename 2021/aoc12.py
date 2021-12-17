@@ -6,15 +6,16 @@ def datafilename():
   txtpath = mypath.with_suffix('.txt')
   return txtpath
 
+data = []
 def readfile():
-  data = []
+  global data
   datafile = datafilename()
   with open(datafile, 'r') as file:
     for line in file:
       data.append(tuple(line.strip().split('-')))
-  return data
 
-def possiblenext(path, data):
+def possiblenext(path):
+  global data
   # Impossibly clever way to keep track of visited small caves
   visitedsmallcaves = list(set([point for edge in path for point in edge if point.islower()]))
   print(f"path: {path}")
@@ -33,17 +34,17 @@ def possiblenext(path, data):
       return ["DEAD END"]
 
 def first():
-  data = readfile()
+  readfile()
   path = []
   paths = []
   # Seed paths with start edges
-  for nextstep in possiblenext(path, data):
+  for nextstep in possiblenext(path):
     path.append(nextstep)
     paths.append(deepcopy(path))
     path.remove(nextstep)
   for path in paths:
     paths.remove(path)
-    for nextstep in possiblenext(path, data):
+    for nextstep in possiblenext(path):
       path.append(nextstep)
       paths.append(deepcopy(path))
   print(f"{paths}")
