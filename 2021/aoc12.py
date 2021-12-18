@@ -48,8 +48,7 @@ def first():
     path.append(nextstep)
     paths.append(deepcopy(path))
     path.remove(nextstep)
-  unfinishedpaths = [path for path in paths if not path[-1][-1] == 'end']
-  #print(f"unfinished: {unfinishedpaths}")
+  unfinishedpaths = deepcopy(paths)
   while unfinishedpaths:
     for path in unfinishedpaths:
       #print(f"current unfinished path: {path}")
