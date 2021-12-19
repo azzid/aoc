@@ -36,8 +36,25 @@ def possiblenext(path):
 
 def possiblenext2(path):
   global data
+  nostartsdata = [edge for edge in data if not 'start' in edge]
   # Impossibly clever way to keep track of visited small caves
   visitedsmallcaves = list(set([point for edge in path for point in edge if point.islower()]))
+
+  # List describing path of small caves
+  smallcavepath = [point for edge in path for point in edge if point.islower()]
+  # Count occurences in list
+  smallcavecounts = {cave:smallcavepath.count(cave) for cave in smallcavepath}
+  if len({k:v for (k,v) in smallcavecounts.items() if v > 2}) == 1:
+    # Small cave has been visited twice
+    smallvisitedtwice = True
+  elif len({k:v for (k,v) in smallcavecounts.items() if v > 2}) == 0:
+    # No small cave visited twice
+    smallvisitedtwice = False
+  else:
+    # something is wrong
+    print(f"more than one cave visited twice [{path}]. error!")
+    quit()
+
   if not path:
     # Path not started, first edge[0] is 'start' mandatory
     starts = [edge for edge in data if edge[0] == 'start']
@@ -46,7 +63,11 @@ def possiblenext2(path):
     # Path has reached end. No next step.
     return []
   else:
-    nexts = [edge for edge in data if path[-1][1] == edge[0] and not edge[1] in visitedsmallcaves]
+    # more than one cave visited twice [[('start', 'op'), ('op', 'bj'), ('bj', 'op'), ('op', 'bj'), ('bj', 'PF')]]. error!
+    if smallvisitedtwice:
+      nexts = [edge for edge in nostartsdata if path[-1][-1] == edge[0] and not edge[1] in visitedsmallcaves]
+    else:
+      nexts = [edge for edge in nostartsdata if path[-1][-1] == edge[0]]
     if nexts:
       return nexts
     else:
