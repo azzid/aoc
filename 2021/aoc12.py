@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3
+from time import time
 from copy import deepcopy
 from pathlib import Path
 def datafilename():
@@ -100,9 +101,11 @@ def checkpath(path):
       quit()
 
 def second():
+  starttime = time()
   readfile()
   path = []
   paths = []
+  i = 0
   # Seed paths with start edges
   for nextstep in possiblenext2(path):
     path.append(nextstep)
@@ -110,16 +113,20 @@ def second():
     path.remove(nextstep)
   unfinishedpaths = deepcopy(paths)
   while unfinishedpaths:
+    if i % 1 == 0:
+      print(f"i{i} #{len(unfinishedpaths)} {int(time() - starttime)}s: {unfinishedpaths[-1]}")
+    i += 1
     for path in unfinishedpaths:
       paths.remove(path)
       for nextstep in possiblenext2(path):
         checkpath(path)
         path.append(nextstep)
-        paths.append(deepcopy(path))
+        if not path in paths:
+          paths.append(deepcopy(path))
         path.pop()
     #for unfinishedpath in unfinishedpaths:
     #  print(f"pre: {unfinishedpath}")
-    unfinishedpaths = [path for path in paths if not path[-1][-1] == 'end']
+    unfinishedpaths = deepcopy([path for path in paths if not path[-1][-1] == 'end' and not path[-1][-1] == "DEAD END"])
     #for unfinishedpath in unfinishedpaths:
     #  print(f"pos: {unfinishedpath}")
     #input("Press Enter to continue...")
