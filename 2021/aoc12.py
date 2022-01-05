@@ -92,7 +92,13 @@ def first():
         path.remove(nextstep)
     unfinishedpaths = [path for path in paths if not path[-1][-1] == 'end']
   print(f"{len(paths)}")
-  
+
+def checkpath(path):
+  for i in list(range(len(path)))[:-1]:
+    if not path[i][-1] == path[i+1][0]:
+      print(f"invalid path: {path}")
+      quit()
+
 def second():
   readfile()
   path = []
@@ -107,10 +113,19 @@ def second():
     for path in unfinishedpaths:
       paths.remove(path)
       for nextstep in possiblenext2(path):
+        checkpath(path)
         path.append(nextstep)
         paths.append(deepcopy(path))
-        path.remove(nextstep)
+        path.pop()
+    #for unfinishedpath in unfinishedpaths:
+    #  print(f"pre: {unfinishedpath}")
     unfinishedpaths = [path for path in paths if not path[-1][-1] == 'end']
+    #for unfinishedpath in unfinishedpaths:
+    #  print(f"pos: {unfinishedpath}")
+    #input("Press Enter to continue...")
+    #for asd in unfinishedpaths:
+    #  print(f"{asd}")
+    #input("Press Enter to continue...")
   print(f"{len(paths)}")
 
 second()
