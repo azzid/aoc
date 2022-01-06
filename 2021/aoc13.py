@@ -21,7 +21,11 @@ def readfile():
 
 def first():
   points, folds = readfile()
+  maxX = max([int(point[0]) for point in points])
+  maxY = max([int(point[1]) for point in points])
   print(f"1st point: {points[0]}, 1st fold: {folds[0]}")
   print(f"last point: {points[-1]}, last fold: {folds[-1]}")
+  print(f"#points: {len(points)}, #folds: {len(folds)}")
+  print(f"max X:{maxX}, max Y:{maxY}")
 
 first()
