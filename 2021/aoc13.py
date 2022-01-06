@@ -12,17 +12,19 @@ def readfile():
   with open(datafile, 'r') as file:
     for line in file:
       if ',' in line:
-        point = tuple(line.strip().split(','))
+        strpoint = line.strip().split(',')
+        point = tuple((int(strpoint[0]), int(strpoint[1])))
         points.append(point)
       elif '=' in line:
-        fold = tuple(line.strip().split()[2].split('='))
+        strfold = line.strip().split()[2].split('=')
+        fold = tuple((strfold[0], int(strfold[1])))
         folds.append(fold)
   return points, folds
 
 def first():
   points, folds = readfile()
-  maxX = max([int(point[0]) for point in points])
-  maxY = max([int(point[1]) for point in points])
+  maxX = max([point[0] for point in points])
+  maxY = max([point[1] for point in points])
   print(f"1st point: {points[0]}, 1st fold: {folds[0]}")
   print(f"last point: {points[-1]}, last fold: {folds[-1]}")
   print(f"#points: {len(points)}, #folds: {len(folds)}")
