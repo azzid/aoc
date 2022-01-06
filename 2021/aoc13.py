@@ -29,11 +29,5 @@ def first():
   maxX = max([point[0] for point in points])
   maxY = max([point[1] for point in points])
   maparray = makeblankmap(maxX+1, maxY+1)
-  maparray[maxY][maxX] = True
-  print(f"1st point: {points[0]}, 1st fold: {folds[0]}")
-  print(f"last point: {points[-1]}, last fold: {folds[-1]}")
-  print(f"#points: {len(points)}, #folds: {len(folds)}")
-  print(f"max X:{maxX}, max Y:{maxY}")
-  print(f"{maparray}")
 
 first()
