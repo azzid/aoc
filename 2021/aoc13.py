@@ -15,7 +15,7 @@ def readfile():
         point = tuple(line.strip().split(','))
         points.append(point)
       elif '=' in line:
-        fold = tuple(line.split()[2].split('='))
+        fold = tuple(line.strip().split()[2].split('='))
         folds.append(fold)
   return points, folds
 
