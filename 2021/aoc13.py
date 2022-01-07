@@ -30,16 +30,26 @@ def makeblankpaper(x, y):
     lines.append(line[:])
   return lines
 
-def putpointsonpaper(points, paperarray):
+def putpointsonpaper(points, paper):
   for point in points:
-    paperarray[point[1]][point[0]] = True
+    paper[point[1]][point[0]] = True
 
+def foldpaper(paper, fold):
+  if fold[0] == 'x':
+    print(f"TODO: X-type fold along line {fold[1]}")
+  elif fold[0] == 'y':
+    print(f"TODO: Y-type fold along line {fold[1]}")
+  else:
+    print(f"Unidentified fold direction. Error.")
+    quit()
+  
 def first():
   points, folds = readfile()
   maxX = max([point[0] for point in points])
   maxY = max([point[1] for point in points])
-  paperarray = makeblankpaper(maxX+1, maxY+1)
-  putpointsonpaper(points, paperarray)
-  print(f"{paperarray}")
+  paper = makeblankpaper(maxX+1, maxY+1)
+  putpointsonpaper(points, paper)
+  foldpaper(paper, folds[0])
+  #print(f"{paper}")
 
 first()
