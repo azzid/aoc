@@ -60,6 +60,15 @@ def countpointsonpaper(paper):
   paperpoints = [j for sub in paper for j in sub]
   # Return count of 'True's
   return paperpoints.count(True)
+
+def displaypaper(paper):
+  for line in paper:
+    for dot in line:
+      if dot:
+        print(f"#", end ="")
+      else:
+        print(f".", end ="")
+    print(f"")
   
 def first():
   points, folds = readfile()
@@ -67,7 +76,9 @@ def first():
   maxY = max([point[1] for point in points])
   paper = makeblankpaper(maxX+1, maxY+1)
   putpointsonpaper(points, paper)
-  paper = foldpaper(paper, folds[0])
-  print(f"{countpointsonpaper(paper)}")
+  displaypaper(paper)
+  for i in range(3,len(paper)+1):
+    print(f"i:{i}")
+    displaypaper(foldpaper(paper, ('x', i)))
 
 first()
