@@ -35,13 +35,31 @@ def putpointsonpaper(points, paper):
     paper[point[1]][point[0]] = True
 
 def foldpaper(paper, fold):
+  foldline = fold[1]
   if fold[0] == 'x':
-    print(f"TODO: X-type fold along line {fold[1]}")
+    # Cut away everything below fold
+    newpaper = paper[:foldline]
+    foldsize = len(paper[foldline+1:])
+    for offset in range(1,foldsize+1):
+      #>>> a
+      #[True, False, False]
+      #>>> b
+      #[False, True, False]
+      #>>> [tup[0]|tup[1] for tup in zip(a,b)]
+      #[True, True, False]
+      newpaper[foldline-offset] = [overlap[0]|overlap[1] for overlap in zip(paper[foldline-offset],paper[foldline+offset])]
   elif fold[0] == 'y':
     print(f"TODO: Y-type fold along line {fold[1]}")
   else:
     print(f"Unidentified fold direction. Error.")
     quit()
+  return newpaper
+
+def countpointsonpaper(paper):
+  # Flatten 2d list
+  paperpoints = [j for sub in paper for j in sub]
+  # Return count of 'True's
+  return paperpoints.count(True)
   
 def first():
   points, folds = readfile()
@@ -49,7 +67,7 @@ def first():
   maxY = max([point[1] for point in points])
   paper = makeblankpaper(maxX+1, maxY+1)
   putpointsonpaper(points, paper)
-  foldpaper(paper, folds[0])
-  #print(f"{paper}")
+  paper = foldpaper(paper, folds[0])
+  print(f"{countpointsonpaper(paper)}")
 
 first()
