@@ -91,7 +91,10 @@ def first():
   maxY = max([point[1] for point in points])
   paper = makeblankpaper(maxX+1, maxY+1)
   putpointsonpaper(points, paper)
-  count = countpointsonpaper(foldpaper(paper, folds[0]))
+  displaypaper(paper, xfold=folds[0][1])
+  folden = foldpaper(paper, folds[0])
+  displaypaper(folden)
+  count = countpointsonpaper(folden)
   print(f"count: {count}")
 
 first()
