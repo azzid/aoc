@@ -36,7 +36,7 @@ def putpointsonpaper(points, paper):
 
 def foldpaper(paper, fold):
   foldline = fold[1]
-  if fold[0] == 'x':
+  if fold[0] == 'y':
     # Cut away everything below fold
     newpaper = paper[:foldline]
     # Figure out the size of the flap getting folded up
@@ -53,8 +53,9 @@ def foldpaper(paper, fold):
       #>>> [tup[0]|tup[1] for tup in zip(a,b)]
       #[True, True, False]
       newpaper[foldline-offset] = [overlap[0]|overlap[1] for overlap in zip(paper[foldline-offset],paper[foldline+offset])]
-  elif fold[0] == 'y':
-    print(f"TODO: Y-type fold along line {fold[1]}")
+  elif fold[0] == 'x':
+    print(f"TODO: X-type fold along line {fold[1]}")
+    quit()
   else:
     print(f"Unidentified fold direction. Error.")
     quit()
