@@ -1,5 +1,6 @@
 #!/usr/local/bin/python3
 from pathlib import Path
+from collections import Counter
 def datafilename():
   mypath = Path(__file__)
   txtpath = mypath.with_suffix('.txt')
@@ -18,10 +19,30 @@ def readfile():
         insertions.append(insertion)
   return template, insertions
   
+def getinsertion(pair, insertions):
+  for insertion in insertions:
+    if insertion[0] == pair:
+      return insertion[1]
+  return None
+  
+def makeinsertions(template, insertions):
+  newstring = ""
+  for i in range(len(template)-1):
+    pair = template[i] + template[i+1]
+    newstring += template[i] + getinsertion(pair, insertions)
+  newstring += pair[-1]
+  return newstring
+  
 def first():
   template, insertions = readfile()
-  print(f"Template: {template}")
-  print(f"first ins: {insertions[0]}")
-  print(f"last ins: {insertions[-1]}")
-  
+  for i in range(11):
+    template = makeinsertions(template, insertions)
+  #print(f"after step {i} lengt is {len(template)}")
+  counts = Counter(list(template))
+  maxchar=max(counts, key=counts.get)
+  maxoccur=counts[maxchar]
+  minchar=min(counts, key=counts.get)
+  minoccur=counts[minchar]
+  print(f"difference is: {maxoccur-minoccur}")
+
 first()
