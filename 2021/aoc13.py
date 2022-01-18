@@ -41,7 +41,7 @@ def foldpaper(paper, fold):
     newpaper = paper[:foldline]
     # Figure out the size of the flap getting folded up
     foldsize = len(paper[foldline+1:])
-    print(f"foldsize is {foldsize}, len of newpaper is {len(newpaper)}")
+    #print(f"foldsize is {foldsize}, len of newpaper is {len(newpaper)}")
     if foldsize > len(newpaper):
       print(f"folded flap longer than remaining paper. error.")
       quit()
@@ -54,8 +54,9 @@ def foldpaper(paper, fold):
       #[True, True, False]
       newpaper[foldline-offset] = [overlap[0]|overlap[1] for overlap in zip(paper[foldline-offset],paper[foldline+offset])]
   elif fold[0] == 'x':
-    print(f"TODO: X-type fold along line with x={fold[1]}")
-    quit()
+    rotatedpaper = rotatepaperclockwise(paper)
+    rotatedpaper = foldpaper(rotatedpaper, ('y', fold[1]))
+    newpaper = rotatepaperback(rotatedpaper)
   else:
     print(f"Unidentified fold direction. Error.")
     quit()
@@ -98,12 +99,12 @@ def first():
   maxY = max([point[1] for point in points])
   paper = makeblankpaper(maxX+1, maxY+1)
   putpointsonpaper(points, paper)
-  displaypaper(paper, xfold=folds[0][1])
-  print(f"Rotate:")
-  displaypaper(rotatepaperback(rotatepaperclockwise(paper)), xfold=folds[0][1])
-  quit()
+  #displaypaper(paper, xfold=folds[0][1])
+  #print(f"Rotate:")
+  #displaypaper(rotatepaperclockwise(paper), yfold=folds[0][1])
+  #print(f"Fold:")
   folden = foldpaper(paper, folds[0])
-  displaypaper(folden)
+  #displaypaper(folden)
   count = countpointsonpaper(folden)
   print(f"count: {count}")
 
