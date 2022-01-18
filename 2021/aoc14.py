@@ -35,14 +35,14 @@ def makeinsertions(template, insertions):
   
 def first():
   template, insertions = readfile()
-  for i in range(11):
+  for i in range(10):
     template = makeinsertions(template, insertions)
-  #print(f"after step {i} lengt is {len(template)}")
+  #print(f"after step {i+1} lengt of {template} is {len(template)}")
   counts = Counter(list(template))
   maxchar=max(counts, key=counts.get)
   maxoccur=counts[maxchar]
   minchar=min(counts, key=counts.get)
   minoccur=counts[minchar]
-  print(f"difference is: {maxoccur-minoccur}")
+  print(f"difference between number of {maxchar}[{maxoccur}] and {minchar}[{minoccur}] is: {maxoccur-minoccur}")
 
 first()
