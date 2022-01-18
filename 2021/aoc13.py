@@ -85,9 +85,9 @@ def displaypaper(paper, xfold=None, yfold=None):
       elif y == xfold:
         print(f"|", end ="")
       elif dot:
-        print(f"#", end ="")
+        print(f"●", end ="")
       else:
-        print(f".", end ="")
+        print(f" ", end ="")
       y += 1
     print(f"")
     x += 1
