@@ -39,7 +39,12 @@ def foldpaper(paper, fold):
   if fold[0] == 'x':
     # Cut away everything below fold
     newpaper = paper[:foldline]
+    # Figure out the size of the flap getting folded up
     foldsize = len(paper[foldline+1:])
+    print(f"foldsize is {foldsize}, len of newpaper is {len(newpaper)}")
+    if foldsize > len(newpaper):
+      print(f"folded flap longer than remaining paper. error.")
+      quit()
     for offset in range(1,foldsize+1):
       #>>> a
       #[True, False, False]
@@ -85,14 +90,8 @@ def first():
   maxX = max([point[0] for point in points])
   maxY = max([point[1] for point in points])
   paper = makeblankpaper(maxX+1, maxY+1)
-  print(f"blank:")
-  displaypaper(paper, xfold=1, yfold=1)
-  quit()
   putpointsonpaper(points, paper)
-  print(f"dotted:")
-  displaypaper(paper)
-  for i in range(3,len(paper)+1):
-    print(f"fold i:{i}")
-    displaypaper(foldpaper(paper, ('x', i)))
+  count = countpointsonpaper(foldpaper(paper, folds[0]))
+  print(f"count: {count}")
 
 first()
