@@ -54,12 +54,18 @@ def foldpaper(paper, fold):
       #[True, True, False]
       newpaper[foldline-offset] = [overlap[0]|overlap[1] for overlap in zip(paper[foldline-offset],paper[foldline+offset])]
   elif fold[0] == 'x':
-    print(f"TODO: X-type fold along line {fold[1]}")
+    print(f"TODO: X-type fold along line with x={fold[1]}")
     quit()
   else:
     print(f"Unidentified fold direction. Error.")
     quit()
   return newpaper
+
+def rotatepaperclockwise(paper):
+ return list(list(x)[::-1] for x in zip(*paper)) 
+
+def rotatepaperback(paper):
+  return list(map(list, zip(*paper)))[::-1]
 
 def countpointsonpaper(paper):
   # Flatten 2d list
@@ -72,11 +78,11 @@ def displaypaper(paper, xfold=None, yfold=None):
   for line in paper:
     y = 0
     for dot in line:
-      if x == xfold and y == yfold:
+      if x == yfold and y == xfold:
         print(f"+", end ="")
-      elif x == xfold:
+      elif x == yfold:
         print(f"-", end ="")
-      elif y == yfold:
+      elif y == xfold:
         print(f"|", end ="")
       elif dot:
         print(f"#", end ="")
@@ -93,6 +99,9 @@ def first():
   paper = makeblankpaper(maxX+1, maxY+1)
   putpointsonpaper(points, paper)
   displaypaper(paper, xfold=folds[0][1])
+  print(f"Rotate:")
+  displaypaper(rotatepaperback(rotatepaperclockwise(paper)), xfold=folds[0][1])
+  quit()
   folden = foldpaper(paper, folds[0])
   displaypaper(folden)
   count = countpointsonpaper(folden)

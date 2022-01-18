@@ -1,1 +1,1 @@
-aoc13.txt-full
+aoc13.txt-small
