@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 from pathlib import Path
 from collections import Counter
+from time import time
 def datafilename():
   mypath = Path(__file__)
   txtpath = mypath.with_suffix('.txt')
@@ -34,10 +35,11 @@ def makeinsertions(template, insertions):
   return newstring
   
 def first():
+  starttime = time()
   template, insertions = readfile()
-  for i in range(10):
+  for i in range(40):
     template = makeinsertions(template, insertions)
-  #print(f"after step {i+1} lengt of {template} is {len(template)}")
+    print(f"after step {i+1} lengt of template is {len(template)} and {int(time() - starttime)}s has passed since start")
   counts = Counter(list(template))
   maxchar=max(counts, key=counts.get)
   maxoccur=counts[maxchar]
