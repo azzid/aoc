@@ -87,7 +87,7 @@ def countcharsinpairs(paircounts):
   return charcounts
  
 def second():
-  iterations = 10
+  iterations = 40
   starttime = time()
   template, insertions = readfile()
   paircounts = countpairsinstring(template)
