@@ -38,7 +38,6 @@ def countpairsinstring(template):
   paircounts = {}
   paircounts['first'] = template[0]
   paircounts['last'] = template[-1]
-  
   for i in range(len(template)-1):
     pair = template[i] + template[i+1]
     try:
@@ -50,7 +49,7 @@ def countpairsinstring(template):
   return paircounts
   
 def second():
-  iterattions = 40
+  iterattions = 10
   starttime = time()
   template, insertions = readfile()
   print(f"{countpairsinstring(template)}")
