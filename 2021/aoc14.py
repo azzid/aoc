@@ -19,13 +19,13 @@ def readfile():
         insertion = tuple(line.strip().split(' -> '))
         insertions.append(insertion)
   return template, insertions
-  
+
 def getinsertion(pair, insertions):
   for insertion in insertions:
     if insertion[0] == pair:
       return insertion[1]
   return None
-  
+
 def makeinsertions(template, insertions):
   newstring = ""
   for i in range(len(template)-1):
@@ -68,7 +68,24 @@ def countpairsinstring(template):
   # Remove first/last:
   # {k: paircounts[k] for k in paircounts if len(k) == 2}
   return paircounts
-  
+
+def countcharsinpairs(paircounts):
+  charcounts = {}
+  for pair in {k: paircounts[k] for k in paircounts if len(k) == 2}:
+    try:
+      charcounts[pair[0]]  += paircounts[pair]
+    except KeyError:
+      charcounts[pair[0]]   = paircounts[pair]
+    try:
+      charcounts[pair[-1]] += paircounts[pair]
+    except KeyError:
+      charcounts[pair[-1]]  = paircounts[pair]
+  charcounts[paircounts['first']] += 1
+  charcounts[paircounts['last']] += 1
+  # Slice all counts in half as chars has been counted twice
+  charcounts = {k: int(charcounts[k]/2) for k in charcounts}
+  return charcounts
+ 
 def second():
   iterations = 10
   starttime = time()
@@ -76,6 +93,11 @@ def second():
   paircounts = countpairsinstring(template)
   for i in range(iterations):
     paircounts = makecounterinsertions(paircounts, insertions)
-  print(f"{paircounts}")
+  counts = countcharsinpairs(paircounts)
+  maxchar=max(counts, key=counts.get)
+  maxoccur=counts[maxchar]
+  minchar=min(counts, key=counts.get)
+  minoccur=counts[minchar]
+  print(f"difference between number of {maxchar}[{maxoccur}] and {minchar}[{minoccur}] is: {maxoccur-minoccur}")
 
 second()
