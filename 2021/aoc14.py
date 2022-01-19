@@ -34,6 +34,27 @@ def makeinsertions(template, insertions):
   newstring += pair[-1]
   return newstring
 
+def makecounterinsertions(paircounts, insertions):
+  # Save first/last char in string to new count dict
+  newpaircounts = {k: paircounts[k] for k in paircounts if k == 'first' or k == 'last'}
+  # Iterate over all the pairs
+  for pair in {k: paircounts[k] for k in paircounts if len(k) == 2}:
+    # Get char to insert
+    insert = getinsertion(pair, insertions)
+    # Create the two new pairs
+    pair1 = pair[0] + insert
+    pair2 = insert + pair[-1] 
+    # Add the count from the old pair to the new ones
+    try:
+      newpaircounts[pair1] += paircounts[pair]
+    except KeyError:
+      newpaircounts[pair1]  = paircounts[pair]
+    try:
+      newpaircounts[pair2] += paircounts[pair]
+    except KeyError:
+      newpaircounts[pair2]  = paircounts[pair]
+  return newpaircounts
+  
 def countpairsinstring(template):
   paircounts = {}
   paircounts['first'] = template[0]
@@ -49,20 +70,12 @@ def countpairsinstring(template):
   return paircounts
   
 def second():
-  iterattions = 10
+  iterations = 10
   starttime = time()
   template, insertions = readfile()
-  print(f"{countpairsinstring(template)}")
-  quit()
+  paircounts = countpairsinstring(template)
   for i in range(iterations):
-    template = makeinsertions(template, insertions)
-    #print(f"after step {i+1} lengt of template is {len(template)} and {int(time() - starttime)}s has passed since start")
-    counts = Counter(list(template))
-    #print(counts)
-    maxchar=max(counts, key=counts.get)
-    maxoccur=counts[maxchar]
-    minchar=min(counts, key=counts.get)
-    minoccur=counts[minchar]
-    print(f"{i+1}: diff {maxchar}[{maxoccur}]-{minchar}[{minoccur}]: {maxoccur-minoccur}")
+    paircounts = makecounterinsertions(paircounts, insertions)
+  print(f"{paircounts}")
 
 second()
