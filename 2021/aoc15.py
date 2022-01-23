@@ -2,6 +2,7 @@
 from pathlib import Path
 from time import time
 from itertools import product
+from copy import deepcopy
 def datafilename():
   mypath = Path(__file__)
   txtpath = mypath.with_suffix('.txt')
@@ -35,22 +36,11 @@ def first():
   pos = (0,0)
   goal = (maxX, maxY)
   pathrisk = 0
-  print(f"{validnextsteps(pos, riskmap)}")
-  quit()
-  while pos[0] < goal[0] or pos[1] < goal[1]:
-    if pos[0] < goal[0] and pos[1] < goal[1]:
-      if riskmap[pos[1]+1][pos[0]] > riskmap[pos[1]][pos[0]+1]:
-        pos = (pos[0]+1, pos[1])
-      elif riskmap[pos[1]+1][pos[0]] <= riskmap[pos[1]][pos[0]+1]:
-        pos = (pos[0], pos[1]+1)
-    elif pos[1] == goal[1]:
-      pos = (pos[0]+1, pos[1])
-    elif pos[0] == goal[0]:
-      pos = (pos[0], pos[1]+1)
-    else:
-      print(f"should probably never get here. quit.")
-      quit()
-    pathrisk += riskmap[pos[1]][pos[0]]
-  print(f"risk: {pathrisk}")
+  paths = []
+  for nextstep in validnextsteps(pos, riskmap):
+    path = [pos, nextstep]
+    paths.append(path)
+  unfinishedpaths = [ p for p in paths if p[-1][0] < maxX or p[-1][1] < maxY ]
+  print(f"{unfinishedpaths}")
 
 first()
