@@ -22,13 +22,11 @@ def validnextsteps(pos, riskmap, prevpos=None):
   xrange = range(max(minX, posX-1), min(maxX, posX+1)+1)
   yrange = range(max(minY, posY-1), min(maxY, posY+1)+1)
   square = list(product(xrange, yrange))
-  square = [ point for point in square if
-           ( point[0] == pos[0] and point[1] != pos[1] ) or
-           ( point[1] == pos[1] and point[0] != pos[0] ) and
-             not point == prevpos ]
-  if (pos[0], pos[1]) in square:
-    print(f"pos {pos} is in square {square}")
-  print(f"x: {list(xrange)}, y: {list(yrange)}, sq: {square}")
+  nexsteps = [ point for point in square if
+             ( point[0] == pos[0] and point[1] != pos[1] ) or
+             ( point[1] == pos[1] and point[0] != pos[0] ) and
+               not point == prevpos ]
+  return nexsteps
 
 def first():
   starttime = time()
@@ -37,8 +35,8 @@ def first():
   pos = (0,0)
   goal = (maxX, maxY)
   pathrisk = 0
-  pos = (1,1)
-  validnextsteps(pos, riskmap, (0,1))
+  print(f"{validnextsteps(pos, riskmap)}")
+  quit()
   while pos[0] < goal[0] or pos[1] < goal[1]:
     if pos[0] < goal[0] and pos[1] < goal[1]:
       if riskmap[pos[1]+1][pos[0]] > riskmap[pos[1]][pos[0]+1]:
