@@ -16,17 +16,18 @@ def readfile():
       riskmap.append([int(a) for a in list(line.strip())])
   return riskmap
 
-def validnextsteps(pos, riskmap, prevpos=None):
+def validnextsteps(path, riskmap):
   minX, minY, maxX, maxY = 0, 0, len(riskmap[0])-1, len(riskmap)-1
+  pos = path[-1]
   posX = pos[0]
   posY = pos[1]
   xrange = range(max(minX, posX-1), min(maxX, posX+1)+1)
   yrange = range(max(minY, posY-1), min(maxY, posY+1)+1)
   square = list(product(xrange, yrange))
   nextsteps = [ point for point in square if (
-             ( point[0] == pos[0] and point[1] != pos[1] ) or
-             ( point[1] == pos[1] and point[0] != pos[0] )) and
-               not point == prevpos ]
+             ( point[0] == posX and point[1] != posY ) or
+             ( point[1] == posY and point[0] != posX )) and
+               not point in path ]
   return nextsteps
 
 def pathcost(path, riskmap):
@@ -39,18 +40,18 @@ def first():
   starttime = time()
   riskmap = readfile()
   maxX, maxY = len(riskmap[0])-1, len(riskmap)-1
-  pos = (0,0)
+  startpos = (0,0)
   goal = (maxX, maxY)
   pathrisk = 0
   paths = []
-  for nextstep in validnextsteps(pos, riskmap):
-    path = [pos, nextstep]
+  for nextstep in validnextsteps([startpos], riskmap):
+    path = [startpos, nextstep]
     paths.append(path)
   unfinishedpaths = [ p for p in paths if p[-1][0] < maxX or p[-1][1] < maxY ]
   while unfinishedpaths:
     for path in unfinishedpaths:
       paths.remove(path)
-      for nextstep in validnextsteps(path[-1], riskmap, prevpos=path[-2]):
+      for nextstep in validnextsteps(path, riskmap):
         newpath = deepcopy(path+[nextstep])
         if pathcost(newpath, riskmap) <= 816:
           paths.append(newpath)
