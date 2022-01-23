@@ -1,6 +1,5 @@
 #!/usr/local/bin/python3
 from pathlib import Path
-from collections import Counter
 from time import time
 def datafilename():
   mypath = Path(__file__)
@@ -22,12 +21,6 @@ def first():
   pos = [0,0]
   goal = [maxX, maxY]
   pathrisk = 0
-  #import code
-  #code.interact(local=locals())
-  #riskmap[pos[1]][pos[0]]
-  #print(f"top left: {riskmap[0][0:3]}, bottom right: {riskmap[-1][-4:-1]}")
-  #print(f"lenX: {maxX}, lenY: {maxY}")
-  #print(f"goal: {riskmap[maxY][maxX]}")
   while pos[0] < goal[0] or pos[1] < goal[1]:
     if pos[0] < goal[0] and pos[1] < goal[1]:
       if riskmap[pos[1]+1][pos[0]] > riskmap[pos[1]][pos[0]+1]:
