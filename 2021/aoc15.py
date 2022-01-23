@@ -28,6 +28,7 @@ def validnextsteps(path, riskmap):
              ( point[0] == posX and point[1] != posY ) or
              ( point[1] == posY and point[0] != posX )) and
                not point in path ]
+  #print(f"pos: {pos}, next: {nextsteps}")
   return nextsteps
 
 def pathcost(path, riskmap):
@@ -49,13 +50,18 @@ def first():
     paths.append(path)
   unfinishedpaths = [ p for p in paths if p[-1][0] < maxX or p[-1][1] < maxY ]
   while unfinishedpaths:
-    for path in unfinishedpaths:
+    for path in unfinishedpaths[:3]:
       paths.remove(path)
       for nextstep in validnextsteps(path, riskmap):
         newpath = deepcopy(path+[nextstep])
         if pathcost(newpath, riskmap) <= 816:
           paths.append(newpath)
     unfinishedpaths = [ p for p in paths if p[-1][0] < maxX or p[-1][1] < maxY ]
-  print(f"{len(paths)}")
+    unfinishedpaths.sort(key=lambda x: pathcost(x, riskmap))
+    for path in unfinishedpaths[:3]:
+      print(f"{pathcost(path, riskmap)}: {path}")
+    finishedpaths = [ p for p in paths if p[-1][0] == maxX and p[-1][1] == maxY ]
+    if finishedpaths:
+      print(f"mincost: {min([ pathcost(path, riskmap) for path in finishedpaths ])}")
 
 first()
