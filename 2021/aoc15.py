@@ -3,6 +3,7 @@ from pathlib import Path
 from time import time
 from itertools import product
 from copy import deepcopy
+from math import sqrt
 def datafilename():
   mypath = Path(__file__)
   txtpath = mypath.with_suffix('.txt')
@@ -37,6 +38,13 @@ def pathcost(path, riskmap):
     cost += riskmap[step[1]][step[0]]
   return cost
 
+def pathdistanceleft(path, goal):
+  pos = path[-1]
+  diffX = goal[0] - pos[0]
+  diffY = goal[1] - pos[1]
+  distance = sqrt(diffX ** 2 + diffY ** 2)
+  return distance
+
 def first():
   starttime = time()
   riskmap = readfile()
@@ -59,7 +67,7 @@ def first():
     unfinishedpaths = [ p for p in paths if p[-1][0] < maxX or p[-1][1] < maxY ]
     unfinishedpaths.sort(key=lambda x: pathcost(x, riskmap))
     for path in unfinishedpaths[:3]:
-      print(f"{pathcost(path, riskmap)}: {path}")
+      print(f"cost: {pathcost(path, riskmap)}, distance: {pathdistanceleft(path, goal)}")
     finishedpaths = [ p for p in paths if p[-1][0] == maxX and p[-1][1] == maxY ]
     if finishedpaths:
       print(f"mincost: {min([ pathcost(path, riskmap) for path in finishedpaths ])}")
