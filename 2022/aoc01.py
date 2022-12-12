@@ -18,4 +18,5 @@ def readfile():
         backpack.append(int(line.strip()))
   return data
 
-print(f"{readfile()}")
+
+print(f"{max(map(sum, readfile()))}")
