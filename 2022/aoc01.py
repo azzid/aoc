@@ -19,4 +19,6 @@ def readfile():
   return data
 
 
-print(f"{max(map(sum, readfile()))}")
+caloriesums = list(map(sum, readfile()))
+caloriesums.sort()
+print(f"{sum(caloriesums[-3:])}")
