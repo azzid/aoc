@@ -54,4 +54,11 @@ points = {
   'tie': 3,
   'lose': 0
 }
-print(f"{points[mymoves[readfile()[0][0]]] + points[outcome(mymoves[readfile()[0][0]], theirmoves[readfile()[0][1]])]}")
+moves=readfile()
+totalpoints=0
+i=0
+for move in moves:
+  totalpoints+=points[mymoves[move[0]]] + points[outcome(mymoves[move[0]], theirmoves[move[1]])]
+  i+=1
+  print(f"{i}: {totalpoints}")
+#print(f"{points[mymoves[readfile()[0][0]]] + points[outcome(mymoves[readfile()[0][0]], theirmoves[readfile()[0][1]])]}")
