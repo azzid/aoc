@@ -36,15 +36,31 @@ def outcome(a, b):
     print("error in comparison. quitting.")
     quit()
 
+def mymove(theirmove, outcome):
+  if theirmove   == 'rock'     and outcome == 'lose':
+    return 'scissors'
+  elif theirmove == 'paper'    and outcome == 'lose':
+    return 'rock'
+  elif theirmove == 'scissors' and outcome == 'lose':
+    return 'paper'
+  elif theirmove == 'rock'     and outcome == 'win':
+    return 'paper'
+  elif theirmove == 'paper'    and outcome == 'win':
+    return 'scissors'
+  elif theirmove == 'scissors' and outcome == 'win':
+    return 'rock'
+  elif outcome   == 'tie':
+    return theirmove
+
 theirmoves = {
   'A': 'rock',
   'B': 'paper',
   'C': 'scissors'
 }
-mymoves = {
-  'X': 'rock',
-  'Y': 'paper',
-  'Z': 'scissors'
+myoutcomes = {
+  'X': 'lose',
+  'Y': 'tie',
+  'Z': 'win'
 }
 points = {
   'rock': 1,
@@ -58,7 +74,7 @@ moves=readfile()
 totalpoints=0
 i=0
 for move in moves:
-  totalpoints+=points[mymoves[move[1]]] + points[outcome(mymoves[move[1]], theirmoves[move[0]])]
+  totalpoints+=points[mymove(theirmoves[move[0]], myoutcomes[move[1]])] + points[myoutcomes[move[1]]]
   i+=1
   print(f"{i}: {totalpoints}")
 #print(f"{points[mymoves[readfile()[0][0]]] + points[outcome(mymoves[readfile()[0][0]], theirmoves[readfile()[0][1]])]}")
