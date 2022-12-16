@@ -5,13 +5,6 @@ def datafilename():
   txtpath = mypath.with_suffix('.txt')
   return txtpath
 
-# 60-60,45-60
-#>>> list(range(3, 5+1))
-#[3, 4, 5]
-#>>> list(map(int, a.split('-')))
-#[60, 60]
-
-
 def readfile():
   data = []
   datafile = datafilename()
@@ -23,4 +16,22 @@ def readfile():
       data.append(tuple((range(astart, astop+1), range(bstart, bstop+1))))
   return data
 
-print(f"{readfile()[0]}")
+def does_one_contain_the_other(rangetuple):
+  rangea = rangetuple[0]
+  rangeb = rangetuple[1]
+  lena = len(rangea)
+  lenb = len(rangeb)
+  commonlength = len(set(rangea).intersection(set(rangeb)))
+  if commonlength == lena or commonlength == lenb:
+    return True
+  else:
+    return False
+
+debug = False
+i = 0
+for rangetuple in readfile():
+  if debug:
+    print(f"{rangetuple}: {does_one_contain_the_other(rangetuple)}")
+  elif does_one_contain_the_other(rangetuple):
+    i += 1
+print(f"found {i} ranges within rangepair")
