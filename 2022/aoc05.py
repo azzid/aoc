@@ -41,6 +41,15 @@ def readfile():
           stacks[i+1].insert(0, x)
     return(stacks, instruction)
 
+def do_operation(op, stacks):
+  no_of_crates = int(op['move'])
+  frompile = int(op['from'])
+  topile = int(op['to'])
+  for i in range(no_of_crates):
+    stacks[topile].append(stacks[frompile].pop())
+
 stacks, operations = readfile()
-print(f"stack 1: {stacks[1]}")
-print(f"operation 1: {operations[1]}")
+for operation in operations:
+  do_operation(operation, stacks)
+for i in stacks.keys():
+  print(f"top of stack {i}: {stacks[i][-1]}")
