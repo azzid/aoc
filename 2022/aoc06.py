@@ -13,8 +13,8 @@ def readfile():
       return list(line.strip())
 
 data = readfile()
-for i in range(4, len(data)+1):
-  chars = data[i-4:i]
-  if len(set(chars)) == 4:
+for i in range(14, len(data)+1):
+  chars = data[i-14:i]
+  if len(set(chars)) == 14:
     print(f"I founds it I dids!! I founds number {i}")
     quit()
