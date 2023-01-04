@@ -32,7 +32,7 @@ def process_ops():
       else:
         curr[line.split()[1]] = int(line.split()[0])
   return(top)
-    
+
 def foldersize(top):
   sizesum=0
   for key in top.keys():
@@ -69,14 +69,16 @@ def return_foldersizes(top, notunder=0, notover=100000):
       pass
     elif type(top[key]) is dict:
       size = foldersize(top[key])
-      if notunder < size < notover: a.append(size)
+      if notunder < size < notover:
+        a.append(size)
+        #print(f"DEBUG: notunder[{notunder}] < size[{size}] < notover[{notover}] - append {size} to {a}")
 
   for key in top.keys():
     if key == '..':
       # dont follow circular link
       pass
     elif type(top[key]) is dict:
-      a = a + return_foldersizes(top[key])
+      a = a + return_foldersizes(top[key], notunder=notunder, notover=notover)
   return(a)
 
 top = process_ops()
@@ -85,5 +87,5 @@ neededfree=30000000
 totalused=foldersize(top)
 totalfree=totalsize-totalused
 #print(f"free: {totalfree}\nneed: {neededfree}\nmiss: {neededfree-totalfree}")
-#print(f"{len(return_foldersizes(top, notunder=4125990, notover=70000000))}")
-print_foldersizes(top)
+print(f"{return_foldersizes(top, notunder=4125990, notover=4473404)[0]}")
+#print_foldersizes(top)
