@@ -13,4 +13,20 @@ def readfile():
       overview.append(list(map(int, list(line.strip()))))
   return(overview)
 
-print(f"{readfile()}")
+def visible_from_left(x, y, overview):
+  row = overview[y]
+  tree = row[x]
+  must_be_lower = row[:x]
+  if max(must_be_lower, default=0) < tree:
+    return True
+  else:
+    return False
+
+def visible_from_right(x, y, overview):
+  pass
+def visible_from_top(x, y, overview):
+  pass
+def visible_from_bottom(x, y, overview):
+  pass
+overview = readfile()
+print(f"{visible_from_left(1, 1, overview)}")
