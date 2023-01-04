@@ -49,5 +49,16 @@ def visible_from_bottom(x, y, overview):
   else:
     return False
 
+def visible_from_edge(x, y, overview):
+  return (
+    visible_from_left(x, y, overview) or
+    visible_from_right(x, y, overview) or
+    visible_from_top(x, y, overview) or
+    visible_from_bottom(x, y, overview)
+  )
+
 overview = readfile()
-print(f"{visible_from_top(2, 2, overview)}")
+row_indices = list(range(0, len(overview)))
+col_indices = list(range(0, len(overview[0])))
+#print(f"x's: {row_indices}\ny's: {col_indices}")
+#print(f"{visible_from_edge(96, 96, overview)}")
