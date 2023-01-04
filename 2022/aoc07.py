@@ -33,4 +33,32 @@ def process_ops():
         curr[line.split()[1]] = int(line.split()[0])
   return(top)
     
-print(f"{process_ops()}")
+def foldersize(top):
+  sizesum=0
+  for key in top.keys():
+    if key == '..':
+      # dont follow circular link
+      pass
+    elif type(top[key]) is int:
+      sizesum+=top[key]
+    elif type(top[key]) is dict:
+      sizesum+=foldersize(top[key])
+  return(sizesum)
+
+# >>> if type(top['/']) is dict:
+#...   True
+#... else:
+#...   False
+#... 
+#True
+#>>> type(top['/']['bqpslnv'])
+#<class 'int'>
+#>>> if type(top['/']['bqpslnv']) is int:
+#...   True
+#... else:
+#...   False
+#... 
+#True
+
+top = process_ops()
+print(f"{foldersize(top)}")
