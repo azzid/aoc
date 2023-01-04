@@ -80,4 +80,4 @@ def return_foldersizes(top, notover=100000):
 
 top = process_ops()
 #print(f"{foldersize(top)}")
-print(f"{return_foldersizes(top)}")
+print(f"{sum(return_foldersizes(top))}")
