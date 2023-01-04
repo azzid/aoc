@@ -60,6 +60,24 @@ def print_foldersizes(top, s=''):
     elif type(top[key]) is dict:
       print_foldersizes(top[key], s)
 
+def return_foldersizes(top, notover=100000):
+  a = []
+  for key in top.keys():
+    if key == '..':
+      # dont follow circular link
+      pass
+    elif type(top[key]) is dict:
+      size = foldersize(top[key])
+      if size < notover: a.append(size)
+
+  for key in top.keys():
+    if key == '..':
+      # dont follow circular link
+      pass
+    elif type(top[key]) is dict:
+      a = a + return_foldersizes(top[key])
+  return(a)
+
 top = process_ops()
 #print(f"{foldersize(top)}")
-print_foldersizes(top)
+print(f"{return_foldersizes(top)}")
