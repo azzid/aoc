@@ -60,5 +60,10 @@ def visible_from_edge(x, y, overview):
 overview = readfile()
 row_indices = list(range(0, len(overview)))
 col_indices = list(range(0, len(overview[0])))
-#print(f"x's: {row_indices}\ny's: {col_indices}")
-#print(f"{visible_from_edge(96, 96, overview)}")
+visible_trees = 0
+for x in row_indices:
+  for y in col_indices:
+    if visible_from_edge(x, y, overview):
+      visible_trees += 1
+print(f"visible trees: {visible_trees}")
+
