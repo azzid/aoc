@@ -60,7 +60,7 @@ def print_foldersizes(top, s=''):
     elif type(top[key]) is dict:
       print_foldersizes(top[key], s)
 
-def return_foldersizes(top, notover=100000):
+def return_foldersizes(top, notunder=100000, notover=100000):
   a = []
   for key in top.keys():
     if key == '..':
@@ -68,7 +68,7 @@ def return_foldersizes(top, notover=100000):
       pass
     elif type(top[key]) is dict:
       size = foldersize(top[key])
-      if size < notover: a.append(size)
+      if notunder < size < notover: a.append(size)
 
   for key in top.keys():
     if key == '..':
@@ -84,4 +84,4 @@ neededfree=30000000
 totalused=foldersize(top)
 totalfree=totalsize-totalused
 print(f"free: {totalfree}\nneed: {neededfree}\nmiss: {neededfree-totalfree}")
-#print(f"{sum(return_foldersizes(top))}")
+print(f"{return_foldersizes(top, notunder=4125990, notover=70000000)}")
