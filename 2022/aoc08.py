@@ -23,10 +23,31 @@ def visible_from_left(x, y, overview):
     return False
 
 def visible_from_right(x, y, overview):
-  pass
+  row = overview[y]
+  tree = row[x]
+  must_be_lower = row[x+1:]
+  if max(must_be_lower, default=0) < tree:
+    return True
+  else:
+    return False
+
 def visible_from_top(x, y, overview):
-  pass
+  row = overview[y]
+  tree = row[x]
+  must_be_lower = [ r[x] for r in overview[:y] ]
+  if max(must_be_lower, default=0) < tree:
+    return True
+  else:
+    return False
+
 def visible_from_bottom(x, y, overview):
-  pass
+  row = overview[y]
+  tree = row[x]
+  must_be_lower = [ r[x] for r in overview[y+1:] ]
+  if max(must_be_lower, default=0) < tree:
+    return True
+  else:
+    return False
+
 overview = readfile()
-print(f"{visible_from_left(1, 1, overview)}")
+print(f"{visible_from_top(2, 2, overview)}")
