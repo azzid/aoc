@@ -13,41 +13,46 @@ def readfile():
       overview.append(list(map(int, list(line.strip()))))
   return(overview)
 
-def visible_from(direction, x, y, overview):
+def viewing_distance(direction, x, y, overview):
   row = overview[y]
   tree = row[x]
 
   if direction == 'left':
     must_be_lower = row[:x]
+    must_be_lower.reverse()
   elif direction == 'right':
     must_be_lower = row[x+1:]
   elif direction == 'top':
     must_be_lower = [ r[x] for r in overview[:y] ]
+    must_be_lower.reverse()
   elif direction == 'bottom':
     must_be_lower = [ r[x] for r in overview[y+1:] ]
   else:
     print(f"ERROR! unknown direction [{direction}]")
     quit()
 
-  if max(must_be_lower, default=-1) < tree:
-    return True
-  else:
-    return False
+  actually_lower = []
+  for i in range(len(must_be_lower)):
+    actually_lower.append(must_be_lower[i])
+    if must_be_lower[i] >= tree:
+      break
 
-def visible_from_edge(x, y, overview):
+  return(len(actually_lower))
+
+def scenic_score(x, y, overview):
   return (
-    visible_from('left', x, y, overview) or
-    visible_from('right', x, y, overview) or
-    visible_from('top', x, y, overview) or
-    visible_from('bottom', x, y, overview)
+    viewing_distance('left', x, y, overview) *
+    viewing_distance('right', x, y, overview) *
+    viewing_distance('top', x, y, overview) *
+    viewing_distance('bottom', x, y, overview)
   )
 
 overview = readfile()
 row_indices = list(range(0, len(overview)))
 col_indices = list(range(0, len(overview[0])))
-visible_trees = 0
+top_scenic_score = 0
 for x in row_indices:
   for y in col_indices:
-    if visible_from_edge(x, y, overview):
-      visible_trees += 1
-print(f"visible trees: {visible_trees}")
+    if scenic_score(x, y, overview) > top_scenic_score:
+      top_scenic_score = scenic_score(x, y, overview)
+print(f"top scenic score: {top_scenic_score}")
