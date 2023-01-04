@@ -29,9 +29,6 @@ def visible_from(direction, x, y, overview):
     print(f"ERROR! unknown direction [{direction}]")
     quit()
 
-  # DEBUG
-  #if x == 0 and y == 1:
-  #  print(f"{max(must_be_lower, default=0) < tree} - from {direction}, tree with height {tree} must tower over {must_be_lower}")
   if max(must_be_lower, default=-1) < tree:
     return True
   else:
@@ -49,15 +46,8 @@ overview = readfile()
 row_indices = list(range(0, len(overview)))
 col_indices = list(range(0, len(overview[0])))
 visible_trees = 0
-invisible_trees = 0
 for x in row_indices:
   for y in col_indices:
     if visible_from_edge(x, y, overview):
       visible_trees += 1
-      #print(f"[{x}][{y}]: True")
-    else:
-      invisible_trees += 1
-      #print(f"[{x}][{y}]: False")
-print(f"visible trees: {visible_trees}\ninvisible trees: {invisible_trees}")
-#print(overview[col_indices[0]][row_indices[3]])
-#[0][1]: False 
+print(f"visible trees: {visible_trees}")
