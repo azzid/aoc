@@ -45,20 +45,21 @@ def foldersize(top):
       sizesum+=foldersize(top[key])
   return(sizesum)
 
-# >>> if type(top['/']) is dict:
-#...   True
-#... else:
-#...   False
-#... 
-#True
-#>>> type(top['/']['bqpslnv'])
-#<class 'int'>
-#>>> if type(top['/']['bqpslnv']) is int:
-#...   True
-#... else:
-#...   False
-#... 
-#True
+def print_foldersizes(top, s=''):
+  for key in top.keys():
+    if key == '..':
+      # dont follow circular link
+      pass
+    elif type(top[key]) is dict:
+      print(f"{s}{key}: {foldersize(top[key])}")
+  s = s + '  '
+  for key in top.keys():
+    if key == '..':
+      # dont follow circular link
+      pass
+    elif type(top[key]) is dict:
+      print_foldersizes(top[key], s)
 
 top = process_ops()
-print(f"{foldersize(top)}")
+#print(f"{foldersize(top)}")
+print_foldersizes(top)
