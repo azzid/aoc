@@ -51,7 +51,8 @@ def print_foldersizes(top, s=''):
       # dont follow circular link
       pass
     elif type(top[key]) is dict:
-      print(f"{s}{key}: {foldersize(top[key])}")
+      if 4125990 < foldersize(top[key]) < 4473404:
+        print(f"{s}{key}: {foldersize(top[key])}")
   s = s + '  '
   for key in top.keys():
     if key == '..':
@@ -60,7 +61,7 @@ def print_foldersizes(top, s=''):
     elif type(top[key]) is dict:
       print_foldersizes(top[key], s)
 
-def return_foldersizes(top, notunder=100000, notover=100000):
+def return_foldersizes(top, notunder=0, notover=100000):
   a = []
   for key in top.keys():
     if key == '..':
@@ -83,5 +84,6 @@ totalsize=70000000
 neededfree=30000000
 totalused=foldersize(top)
 totalfree=totalsize-totalused
-print(f"free: {totalfree}\nneed: {neededfree}\nmiss: {neededfree-totalfree}")
-print(f"{return_foldersizes(top, notunder=4125990, notover=70000000)}")
+#print(f"free: {totalfree}\nneed: {neededfree}\nmiss: {neededfree-totalfree}")
+#print(f"{len(return_foldersizes(top, notunder=4125990, notover=70000000))}")
+print_foldersizes(top)
