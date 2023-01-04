@@ -79,5 +79,9 @@ def return_foldersizes(top, notover=100000):
   return(a)
 
 top = process_ops()
-#print(f"{foldersize(top)}")
-print(f"{sum(return_foldersizes(top))}")
+totalsize=70000000
+neededfree=30000000
+totalused=foldersize(top)
+totalfree=totalsize-totalused
+print(f"free: {totalfree}\nneed: {neededfree}\nmiss: {neededfree-totalfree}")
+#print(f"{sum(return_foldersizes(top))}")
