@@ -10,6 +10,7 @@ def readfile():
   datafile = datafilename()
   with open(datafile, 'r') as file:
     for line in file:
+      # wonderful, but to simplistic - consider: eightwothree (should be 8wo3, not eigh23)
       digitedline = line.replace('one', '1').replace('two', '2').replace('three','3').replace('four','4').replace('five','5').replace('six','6').replace('seven','7').replace('eight','8').replace('nine','9')
       nums = [ c for c in digitedline if c.isdigit() ]
       data.append(int(nums[0] + nums[-1]))
