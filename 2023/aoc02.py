@@ -28,12 +28,29 @@ def gameisvalid(game):
       if pull[color] > bag[color]:
         valid = False
   return valid
-  
 
+def gameminbag(game):
+  bag = {}
+  for pull in game:
+    for color in pull.keys():
+      try:
+        if pull[color] > bag[color]:
+          bag[color] = pull[color]
+      except:
+        bag[color] = pull[color]
+  return bag
+
+def bagpower(bag):
+  prod = 1
+  for fakt in bag.values(): prod *= fakt
+  return prod
+        
 # Max valid colors - can't pull more than you have in the bag
 bag = { 'red': 12, 'green': 13, 'blue': 14 }
 games = readfile()
 summ = 0
 for gameno in games.keys():
-  if gameisvalid(games[gameno]): summ += gameno
+  summ += bagpower(gameminbag(games[gameno]))
 print(summ)
+#print(gameminbag(games[1]))
+#print(bagpower(gameminbag(games[1])))
