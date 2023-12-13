@@ -21,4 +21,19 @@ def readfile():
         data[gameno].append(d)
   return data
 
-print(readfile()[1])
+def gameisvalid(game):
+  valid = True
+  for pull in game:
+    for color in pull.keys():
+      if pull[color] > bag[color]:
+        valid = False
+  return valid
+  
+
+# Max valid colors - can't pull more than you have in the bag
+bag = { 'red': 12, 'green': 13, 'blue': 14 }
+games = readfile()
+summ = 0
+for gameno in games.keys():
+  if gameisvalid(games[gameno]): summ += gameno
+print(summ)
