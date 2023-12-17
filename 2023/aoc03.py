@@ -41,8 +41,8 @@ number = '0'
 summ   = 0
 startrow, startcol = [140, 140]
 stoprow, stopcol = [0, 0]
-maxrow = len(ptmtx)
-maxcol = len(ptmtx[0])
+maxrow = len(ptmtx)-1
+maxcol = len(ptmtx[0])-1
 for line in range(len(ptmtx)):
   for column in range(len(ptmtx[line])):
     char = ptmtx[line][column]
@@ -64,8 +64,9 @@ for line in range(len(ptmtx)):
     if startcol <= stopcol: # found both ends of number
       if is_valid(startrow, stoprow, startcol, stopcol):
         summ += int(number)
-      #else:
-      #  print(f"invalid: {number}, found on {startrow}x{startcol}")
+        print(f"  valid: {number}, found on {startrow}x{startcol}. SUM: {summ}")
+      else:
+        print(f"invalid: {number}, found on {startrow}x{startcol}")
       startrow, startcol = [140, 140]
       stoprow, stopcol = [0, 0]
       number = '0'
