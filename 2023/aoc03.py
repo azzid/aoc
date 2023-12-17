@@ -13,6 +13,24 @@ def readfile():
       data.append(list(line.strip()))
   return data
 
+def gearpos(startrow, stoprow, startcol, stopcol):
+  miny = max(startrow - 1, 0)
+  maxy = min(stoprow + 2, maxrow)
+  minx = max(startcol - 1, 0)
+  maxx = min(stopcol + 2, maxcol)
+
+  twod = [line[minx:maxx] for line in ptmtx[miny:maxy]]
+  res = []
+  for Y in range(miny, maxy+1):
+    for X in range(minx, maxx+1):
+      if ptmtx[Y][X] == '*':
+        res.append(f"{Y}x{X}")
+#  if len(res) > 1:
+#    print(f"long res: {res}")
+#  else:
+#    print(f"simp res: {res}")
+  return res
+        
 def is_valid(startrow, stoprow, startcol, stopcol):
   miny = max(startrow - 1, 0)
   maxy = min(stoprow + 2, maxrow)
@@ -43,6 +61,7 @@ startrow, startcol = [140, 140]
 stoprow, stopcol = [0, 0]
 maxrow = len(ptmtx)-1
 maxcol = len(ptmtx[0])-1
+gears = {}
 #print(ptmtx[maxrow][maxcol])
 for line in range(len(ptmtx)):
   for column in range(len(ptmtx[line])):
@@ -63,6 +82,11 @@ for line in range(len(ptmtx)):
         else:
           stopcol = column-1 
     if startcol <= stopcol and startrow == stoprow: # found both ends of number
+      for pos in gearpos(startrow, stoprow, startcol, stopcol):
+        try:
+          gears[pos] += [int(number)]
+        except:
+          gears[pos] = [int(number)]
       if is_valid(startrow, stoprow, startcol, stopcol):
         summ += int(number)
       #  print(f"  valid: {number}, found on {startrow}x{startcol}. SUM: {summ}")
@@ -72,4 +96,5 @@ for line in range(len(ptmtx)):
       stoprow, stopcol = [0, 0]
       number = '0'
 
-print(summ)
+gearpairs = {k:v for k, v in gears.items() if len(gears[k]) == 2}
+print(sum([pair[0] * pair[1] for pair in gearpairs.values()]))
