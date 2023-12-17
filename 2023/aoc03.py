@@ -10,7 +10,7 @@ def readfile():
   datafile = datafilename()
   with open(datafile, 'r') as file:
     for line in file:
-      data.append(list(line))
+      data.append(list(line.strip()))
   return data
 
 def is_valid(startrow, stoprow, startcol, stopcol):
@@ -43,6 +43,7 @@ startrow, startcol = [140, 140]
 stoprow, stopcol = [0, 0]
 maxrow = len(ptmtx)-1
 maxcol = len(ptmtx[0])-1
+#print(ptmtx[maxrow][maxcol])
 for line in range(len(ptmtx)):
   for column in range(len(ptmtx[line])):
     char = ptmtx[line][column]
@@ -57,10 +58,10 @@ for line in range(len(ptmtx)):
     if char in chars.union('.') or column == maxcol:
       if not number == '0': # found end of number
         stoprow = line
-      if column == maxcol:
-        stopcol = column
-      else:
-        stopcol = column-1 
+        if column == maxcol:
+          stopcol = column
+        else:
+          stopcol = column-1 
     if startcol <= stopcol: # found both ends of number
       if is_valid(startrow, stoprow, startcol, stopcol):
         summ += int(number)
