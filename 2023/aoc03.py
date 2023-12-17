@@ -64,6 +64,10 @@ for line in range(len(ptmtx)):
     if startcol <= stopcol: # found both ends of number
       if is_valid(startrow, stoprow, startcol, stopcol):
         summ += int(number)
+      #else:
+      #  print(f"invalid: {number}, found on {startrow}x{startcol}")
+      startrow, startcol = [140, 140]
+      stoprow, stopcol = [0, 0]
       number = '0'
 
 print(summ)
