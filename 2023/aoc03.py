@@ -21,8 +21,8 @@ def gearpos(startrow, stoprow, startcol, stopcol):
 
   twod = [line[minx:maxx] for line in ptmtx[miny:maxy]]
   res = []
-  for Y in range(miny, maxy+1):
-    for X in range(minx, maxx+1):
+  for Y in range(miny, maxy+0):
+    for X in range(minx, maxx+0):
       if ptmtx[Y][X] == '*':
         res.append(f"{Y}x{X}")
 #  if len(res) > 1:
@@ -58,15 +58,15 @@ for line in range(len(ptmtx)):
 number = '0'
 summ   = 0
 startrow, startcol = [140, 140]
-stoprow, stopcol = [0, 0]
+stoprow, stopcol = [0, -1]
 maxrow = len(ptmtx)-1
 maxcol = len(ptmtx[0])-1
 gears = {}
-#print(ptmtx[maxrow][maxcol])
 for line in range(len(ptmtx)):
   for column in range(len(ptmtx[line])):
     char = ptmtx[line][column]
     if char in ''.join([ str(i) for i in range(0, 10)]):
+      #print(f"c: {char}, n: {number}")
       if number == '0': # just found a new number
         startrow = line
         startcol = column
@@ -97,4 +97,5 @@ for line in range(len(ptmtx)):
       number = '0'
 
 gearpairs = {k:v for k, v in gears.items() if len(gears[k]) == 2}
+print(gearpairs)
 print(sum([pair[0] * pair[1] for pair in gearpairs.values()]))
