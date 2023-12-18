@@ -20,9 +20,16 @@ def readfile():
 numberoftickets = {}
 for i, draw in enumerate(readfile()):
   numwinnums = len(set(draw['winner']).intersection(set(draw['ticket'])))
+  print(f"wins: {numwinnums}")
   for j in range(1,numwinnums+2):
+    print(f"i: {i}, j: {j}")
     try:
-      numberoftickets[i+j] += 1
+      multiplier = numberoftickets[i+1]
     except:
-      numberoftickets[i+j] = 1
+      multiplier = 1
+    try:
+      numberoftickets[i+j] += multiplier
+    except:
+      numberoftickets[i+j] = multiplier
+print(numberoftickets)
 print(sum(numberoftickets.values()))
