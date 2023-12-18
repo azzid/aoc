@@ -17,10 +17,12 @@ def readfile():
       data.append(draw)
   return data
 
-points = 0
-for draw in readfile():
+numberoftickets = {}
+for i, draw in enumerate(readfile()):
   numwinnums = len(set(draw['winner']).intersection(set(draw['ticket'])))
-  #print(numwinnums)
-  if numwinnums > 0:
-    points = points + 2**(numwinnums-1)
-print(points)
+  for j in range(1,numwinnums+2):
+    try:
+      numberoftickets[i+j] += 1
+    except:
+      numberoftickets[i+j] = 1
+print(sum(numberoftickets.values()))
