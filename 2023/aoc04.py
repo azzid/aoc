@@ -21,12 +21,12 @@ numberoftickets = {}
 for i, draw in enumerate(readfile()):
   numwinnums = len(set(draw['winner']).intersection(set(draw['ticket'])))
   print(f"wins: {numwinnums}")
+  try:
+    multiplier = numberoftickets[i+1]
+  except:
+    multiplier = 1
   for j in range(1,numwinnums+2):
     print(f"i: {i}, j: {j}")
-    try:
-      multiplier = numberoftickets[i+1]
-    except:
-      multiplier = 1
     try:
       numberoftickets[i+j] += multiplier
     except:
